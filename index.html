@@ -2,39 +2,343 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ultra Discord Presence</title>
+
+<title>Discord Presence</title>
 
 <style>
 
-*{box-sizing:border-box}
-
-body{
+*{
+box-sizing:border-box;
 margin:0;
-font-family:Inter,Segoe UI,sans-serif;
-background:#0b0f19;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-color:white;
-overflow:hidden;
+padding:0;
 }
 
-/* animated gradient background */
+body{
+font-family:Segoe UI,Inter,sans-serif;
+background:#0b0f19;
+color:white;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:flex-start;
+padding:40px 15px;
+overflow-x:hidden;
+}
+
+/* background glow */
 
 body::before{
 content:"";
-position:absolute;
-width:600px;
-height:600px;
+position:fixed;
+width:700px;
+height:700px;
 background:linear-gradient(45deg,#6366f1,#22c55e,#9333ea);
-filter:blur(120px);
-animation:move 10s infinite alternate;
+filter:blur(140px);
 z-index:-1;
+top:-200px;
+left:-200px;
 }
 
-@keyframes move{
+/* card */
+
+.card{
+width:100%;
+max-width:380px;
+background:rgba(17,25,40,0.75);
+backdrop-filter:blur(20px);
+border-radius:18px;
+box-shadow:0 15px 50px rgba(0,0,0,0.6);
+overflow:hidden;
+}
+
+/* banner */
+
+.banner{
+height:120px;
+background:linear-gradient(120deg,#6366f1,#22c55e,#9333ea);
+background-size:300% 300%;
+animation:gradient 6s infinite;
+}
+
+@keyframes gradient{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
+}
+
+/* profile */
+
+.profile{
+text-align:center;
+margin-top:-50px;
+}
+
+.avatar-wrapper{
+position:relative;
+display:inline-block;
+}
+
+.avatar{
+width:90px;
+height:90px;
+border-radius:50%;
+border:4px solid #0b0f19;
+}
+
+.status-ring{
+position:absolute;
+bottom:6px;
+right:6px;
+width:16px;
+height:16px;
+border-radius:50%;
+border:3px solid #0b0f19;
+}
+
+.username{
+font-size:20px;
+font-weight:600;
+margin-top:10px;
+}
+
+.status{
+font-size:13px;
+opacity:.8;
+}
+
+/* section */
+
+.section{
+padding:18px;
+border-top:1px solid rgba(255,255,255,.05);
+}
+
+.activity{
+font-size:14px;
+opacity:.9;
+}
+
+/* spotify */
+
+.spotify{
+margin-top:12px;
+display:flex;
+gap:10px;
+align-items:center;
+background:#1db95420;
+padding:10px;
+border-radius:10px;
+}
+
+.spotify img{
+width:50px;
+height:50px;
+border-radius:8px;
+}
+
+.spotify-info{
+font-size:13px;
+}
+
+.progress{
+height:4px;
+background:#333;
+border-radius:4px;
+margin-top:6px;
+overflow:hidden;
+}
+
+.progress-bar{
+height:100%;
+width:0%;
+background:#1db954;
+}
+
+/* music */
+
+.music{
+padding:18px;
+border-top:1px solid rgba(255,255,255,.05);
+}
+
+audio{
+width:100%;
+}
+
+.volume{
+width:100%;
+margin-top:10px;
+}
+
+.visual{
+height:6px;
+background:#22c55e;
+border-radius:4px;
+margin-top:6px;
+width:50%;
+}
+
+/* mobile */
+
+@media(max-width:480px){
+
+.banner{height:100px}
+
+.avatar{
+width:80px;
+height:80px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<div class="banner"></div>
+
+<div class="profile">
+
+<div class="avatar-wrapper">
+<img id="avatar" class="avatar">
+<div id="ring" class="status-ring"></div>
+</div>
+
+<div id="username" class="username">Loading...</div>
+<div id="status" class="status"></div>
+
+</div>
+
+<div class="section">
+
+<div id="activity" class="activity">No activity</div>
+
+<div id="spotify" class="spotify" style="display:none">
+
+<img id="cover">
+
+<div class="spotify-info">
+
+<div id="song"></div>
+<div id="artist" style="opacity:.7"></div>
+
+<div class="progress">
+<div id="bar" class="progress-bar"></div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="music">
+
+<audio id="audio" controls>
+<source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<input type="range" min="0" max="1" step="0.01" value="0.5" id="volume" class="volume">
+
+<div id="visual" class="visual"></div>
+
+</div>
+
+</div>
+
+<script>
+
+const userId="1231241822081126411"
+
+/* update UI */
+
+function updateUI(data){
+
+const user=data.discord_user
+
+document.getElementById("username").innerText=user.username
+
+document.getElementById("avatar").src=
+`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`
+
+const status=data.discord_status
+
+document.getElementById("status").innerText=status
+
+const colors={
+online:"#22c55e",
+idle:"#facc15",
+dnd:"#ef4444",
+offline:"#6b7280"
+}
+
+document.getElementById("ring").style.background=colors[status]
+
+if(data.activities.length>0){
+document.getElementById("activity").innerText=data.activities[0].name
+}
+
+if(data.spotify){
+
+const s=data.spotify
+
+const box=document.getElementById("spotify")
+
+box.style.display="flex"
+
+document.getElementById("song").innerText=s.song
+document.getElementById("artist").innerText=s.artist
+document.getElementById("cover").src=s.album_art_url
+
+let percent=(Date.now()-s.timestamps.start)/(s.timestamps.end-s.timestamps.start)*100
+
+document.getElementById("bar").style.width=percent+"%"
+
+}
+
+}
+
+/* websocket */
+
+const socket=new WebSocket("wss://api.lanyard.rest/socket")
+
+socket.onopen=()=>{
+socket.send(JSON.stringify({
+op:2,
+d:{subscribe_to_id:userId}
+}))
+}
+
+socket.onmessage=(event)=>{
+
+const payload=JSON.parse(event.data)
+
+if(payload.t==="INIT_STATE" || payload.t==="PRESENCE_UPDATE"){
+updateUI(payload.d)
+}
+
+}
+
+/* music */
+
+const audio=document.getElementById("audio")
+const volume=document.getElementById("volume")
+const visual=document.getElementById("visual")
+
+volume.oninput=()=>{
+audio.volume=volume.value
+visual.style.width=(volume.value*100)+"%"
+}
+
+</script>
+
+</body>
+</html>@keyframes move{
 0%{transform:translate(-100px,-100px)}
 100%{transform:translate(100px,100px)}
 }
