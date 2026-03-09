@@ -3,76 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glassmorphism UI Design</title>
+    <title>Discord Lanyard & Music Player Integration</title>
+    <link href="https://cdn.jsdelivr.net/npm/@discord-tooltip/tooltip@0.0.1/dist/tooltip.css" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #e0e0e0, #ffffff);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            display: flex;
-            width: 80%;
-            max-width: 1200px;
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(10px);
-            border-radius: 10px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        }
-        .column {
-            padding: 20px;
-            flex: 1;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .discord-status {
-            background: rgba(200, 197, 255, 0.5);
-            transition: background 0.3s;
-        }
-        .discord-status:hover {
-            background: rgba(200, 197, 255, 0.7);
-        }
-        .music-player {
-            background: rgba(255, 200, 200, 0.5);
-            transition: background 0.3s;
-        }
-        .music-player:hover {
-            background: rgba(255, 200, 200, 0.7);
-        }
+        body { font-family: Arial, sans-serif; }
+        #music-player { width: 300px; margin: 20px; }
+        .volume-control { width: 100%; }
+        .status { margin-top: 20px; }
+        .visualization { height: 10px; background: #3b3b3b; margin: 5px 0; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="column discord-status">
-            <h2>Discord Status</h2>
-            <p>Online</p>
-        </div>
-        <div class="column music-player">
-            <h2>Music Player</h2>
-            <p>Currently Playing: Track Title</p>
-            <input type="range" min="0" max="100" value="50" />
-            <button>Play</button>
-            <button>Pause</button>
-        </div>
+    <div id="music-player">
+        <h2>Discord Music Player</h2>
+        <audio id="audio" controls>
+            <source src="your-music-file.mp3" type="audio/mpeg">
+            Your browser does not support the audio tag.
+        </audio>
+        <input type="range" class="volume-control" min="0" max="1" step="0.01" value="0.5" id="volume">
+        <div class="visualization" id="visualization"></div>
+        <div class="status" id="discord-status">Loading status...</div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/@discord-tooltip/tooltip@0.0.1/dist/tooltip.min.js"></script>
     <script>
-        // Keyboard shortcuts for play, pause, and volume control
-        document.addEventListener('keydown', function(event) {
-            if (event.code === 'Space') {
-                // Toggle Play/Pause
-                console.log('Play/Pause toggled');
-            } else if (event.code === 'ArrowUp') {
-                // Increase volume
-                console.log('Volume increased');
-            } else if (event.code === 'ArrowDown') {
-                // Decrease volume
-                console.log('Volume decreased');
+        const audio = document.getElementById('audio');
+        const volumeControl = document.getElementById('volume');
+        const visualization = document.getElementById('visualization');
+        const discordStatus = document.getElementById('discord-status');
+        volumeControl.addEventListener('input', () => {
+            audio.volume = volumeControl.value;
+            renderVisualization();
+        });
+
+        function renderVisualization() {
+            visualization.style.width = (audio.volume * 100) + '%';
+            visualization.style.backgroundColor = `rgba(0, 128, 0, ${audio.volume})`;
+        }
+
+        document.addEventListener('keydown', (event) => {
+            if (event.code === 'Space') { // Space for play/pause
+                if (audio.paused) {
+                    audio.play();
+                } else {
+                    audio.pause();
+                }
             }
         });
+
+        function fetchDiscordStatus(userId) {
+            fetch(`https://discord.com/api/v9/users/${userId}/profile`, {
+                headers: { 'Authorization': `Bot YOUR_BOT_TOKEN` }
+            })
+            .then(response => response.json())
+            .then(data => {
+                discordStatus.innerHTML = `<span style='color:${data.status === 'online' ? 'green' : 'red'}'>${data.status}</span>`;
+            });
+        }
+
+        fetchDiscordStatus('1231241822081126411');
     </script>
 </body>
 </html>
