@@ -1,1 +1,78 @@
-<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>Volume Control Widget</title>\n    <style>\n        /* Glassmorphism styling */\n        body {\n            background: linear-gradient(to right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1));\n            backdrop-filter: blur(10px);\n            color: white;\n            font-family: Arial, sans-serif;\n        }\n        .volume-control {\n            position: relative;\n            padding: 20px;\n            border-radius: 10px;\n            box-shadow: 0 4px 30px rgba(0,0,0,0.1);\n        }\n        .slider {\n            appearance: none;\n            width: 100%;\n            height: 10px;\n            background: #ddd;\n            border-radius: 5px;\n            outline: none;\n        }\n        .slider::-webkit-slider-thumb {\n            -webkit-appearance: none;\n            appearance: none;\n            width: 20px;\n            height: 20px;\n            background: #007bff;\n            border-radius: 50%;\n            cursor: pointer;\n            animation: thumbAnimation 0.3s ease;\n        }\n        @keyframes thumbAnimation {\n            0% { transform: scale(1); }\n            50% { transform: scale(1.2); }\n            100% { transform: scale(1); }\n        }\n        .volume-display {\n            font-size: 24px;\n            margin: 10px 0;\n        }\n        .volume-bar {\n            width: 100%;\n            background: rgba(255, 255, 255, 0.2);\n            border-radius: 5px;\n            height: 10px;\n        }\n        .current-level {\n            height: 10px;\n            background: #007bff;\n            border-radius: 5px;\n        }\n    </style>\n</head>\n<body>\n    <div class="volume-control">\n        <div class="volume-display">Volume: <span id="volume-percent">50%</span></div>\n        <input type="range" min="0" max="100" value="50" class="slider" id="volume-slider">\n        <div class="volume-bar">\n            <div class="current-level" style="width: 50%;"></div>\n        </div>\n    </div>\n    <script>\n        const slider = document.getElementById('volume-slider');\n        const volumeDisplay = document.getElementById('volume-percent');\n        slider.oninput = function() {\n            volumeDisplay.innerHTML = this.value + "%";\n            document.querySelector('.current-level').style.width = this.value + "%";\n        };\n        document.addEventListener('keydown', function(event) {\n            if (event.key === '+') {\n                slider.value = Math.min(100, parseInt(slider.value) + 5);\n                slider.oninput();\n            } else if (event.key === '-') {\n                slider.value = Math.max(0, parseInt(slider.value) - 5);\n                slider.oninput();\n            } else if (event.key === 'm') {\n                if (slider.value > 0) {\n                    slider.setAttribute('data-muted', 'true');\n                    slider.value = 0;\n                } else {\n                    slider.removeAttribute('data-muted');\n                    slider.value = 50;\n                }\n                slider.oninput();\n            }\n        });\n    </script>\n</body>\n</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glassmorphism UI Design</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #e0e0e0, #ffffff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            width: 80%;
+            max-width: 1200px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        .column {
+            padding: 20px;
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .discord-status {
+            background: rgba(200, 197, 255, 0.5);
+            transition: background 0.3s;
+        }
+        .discord-status:hover {
+            background: rgba(200, 197, 255, 0.7);
+        }
+        .music-player {
+            background: rgba(255, 200, 200, 0.5);
+            transition: background 0.3s;
+        }
+        .music-player:hover {
+            background: rgba(255, 200, 200, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="column discord-status">
+            <h2>Discord Status</h2>
+            <p>Online</p>
+        </div>
+        <div class="column music-player">
+            <h2>Music Player</h2>
+            <p>Currently Playing: Track Title</p>
+            <input type="range" min="0" max="100" value="50" />
+            <button>Play</button>
+            <button>Pause</button>
+        </div>
+    </div>
+    <script>
+        // Keyboard shortcuts for play, pause, and volume control
+        document.addEventListener('keydown', function(event) {
+            if (event.code === 'Space') {
+                // Toggle Play/Pause
+                console.log('Play/Pause toggled');
+            } else if (event.code === 'ArrowUp') {
+                // Increase volume
+                console.log('Volume increased');
+            } else if (event.code === 'ArrowDown') {
+                // Decrease volume
+                console.log('Volume decreased');
+            }
+        });
+    </script>
+</body>
+</html>
