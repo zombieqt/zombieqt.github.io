@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Discord Presence</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial, sans-serif;
+background:linear-gradient(135deg,#1e293b,#22c55e);
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+}
+
+.card{
+background:rgba(0,0,0,0.5);
+padding:25px;
+border-radius:15px;
+width:320px;
+text-align:center;
+backdrop-filter:blur(10px);
+}
+
+.avatar{
+width:80px;
+height:80px;
+border-radius:50%;
+margin-bottom:10px;
+}
+
+.status{
+font-size:14px;
+opacity:0.8;
+}
+
+audio{
+width:100%;
+margin-top:15px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<img id="avatar" class="avatar">
+
+<h2 id="name">Loading...</h2>
+
+<div id="status" class="status">Loading status...</div>
+
+<audio controls>
+<source src="music.mp3" type="audio/mpeg">
+</audio>
+
+</div>
+
+<script>
+
+const userId = "1231241822081126411";
+
+async function loadUser(){
+
+const res = await fetch("https://api.lanyard.rest/v1/users/" + userId);
+
+const json = await res.json();
+
+const data = json.data;
+
+document.getElementById("name").innerText = data.discord_user.username;
+
+document.getElementById("avatar").src =
+"https://cdn.discordapp.com/avatars/" +
+data.discord_user.id +
+"/" +
+data.discord_user.avatar +
+".png";
+
+document.getElementById("status").innerText = data.discord_status;
+
+}
+
+loadUser();
+
+</script>
+
+</body>
+</html>
