@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Discord Presence</title>
+<title>zombieqt</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
 *, *::before, *::after {
@@ -19,11 +19,15 @@
   --accent: #6366f1;
   --accent2: #9333ea;
   --green: #22c55e;
+  --yellow: #facc15;
+  --red: #ef4444;
+  --gray: #6b7280;
+  --spotify: #1db954;
   --bg: #080c14;
-  --card-bg: rgba(15, 20, 35, 0.72);
-  --border: rgba(255,255,255,0.08);
-  --text-muted: rgba(255,255,255,0.55);
-  --radius: 20px;
+  --card-bg: rgba(13, 17, 30, 0.78);
+  --border: rgba(255,255,255,0.07);
+  --text-muted: rgba(255,255,255,0.5);
+  --radius: 22px;
 }
 
 body {
@@ -34,7 +38,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 48px 16px 64px;
+  padding: 48px 16px 72px;
   overflow-x: hidden;
 }
 
@@ -44,74 +48,73 @@ body {
   border-radius: 50%;
   filter: blur(120px);
   z-index: -1;
-  opacity: 0.45;
-  animation: drift 18s ease-in-out infinite alternate;
+  opacity: 0.4;
+  animation: drift 20s ease-in-out infinite alternate;
 }
 .blob-1 {
-  width: 600px; height: 600px;
+  width: 650px; height: 650px;
   background: radial-gradient(circle, #6366f1, transparent 70%);
-  top: -180px; left: -180px;
-  animation-delay: 0s;
+  top: -200px; left: -200px;
 }
 .blob-2 {
-  width: 500px; height: 500px;
+  width: 550px; height: 550px;
   background: radial-gradient(circle, #9333ea, transparent 70%);
-  bottom: -150px; right: -150px;
-  animation-delay: -6s;
+  bottom: -180px; right: -180px;
+  animation-delay: -7s;
 }
 .blob-3 {
-  width: 380px; height: 380px;
+  width: 400px; height: 400px;
   background: radial-gradient(circle, #22c55e, transparent 70%);
-  top: 40%; left: 50%;
+  top: 45%; left: 50%;
   transform: translate(-50%, -50%);
-  animation-delay: -12s;
-  opacity: 0.2;
+  animation-delay: -14s;
+  opacity: 0.15;
 }
 
 @keyframes drift {
   0%   { transform: translate(0, 0) scale(1); }
-  33%  { transform: translate(40px, -30px) scale(1.05); }
-  66%  { transform: translate(-20px, 50px) scale(0.97); }
-  100% { transform: translate(30px, -10px) scale(1.03); }
+  33%  { transform: translate(45px, -35px) scale(1.06); }
+  66%  { transform: translate(-25px, 55px) scale(0.96); }
+  100% { transform: translate(35px, -15px) scale(1.04); }
 }
 
 /* ── layout ── */
 .wrapper {
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
   display: flex;
   flex-direction: column;
   gap: 14px;
-  animation: fadeUp 0.6s ease both;
+  animation: fadeUp 0.65s cubic-bezier(0.22,1,0.36,1) both;
 }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(28px); }
+  from { opacity: 0; transform: translateY(32px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ── glass card base ── */
 .card {
   background: var(--card-bg);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.06);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
   overflow: hidden;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
 }
 .card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 28px 70px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.08);
+  transform: translateY(-4px);
+  box-shadow: 0 32px 72px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.07);
 }
 
 /* ── profile card ── */
 .banner {
-  height: 110px;
-  background: linear-gradient(120deg, #6366f1, #9333ea, #22c55e);
+  height: 115px;
+  background: linear-gradient(120deg, #6366f1 0%, #9333ea 50%, #22d3ee 100%);
   background-size: 300% 300%;
-  animation: gradientShift 8s ease infinite;
+  animation: gradientShift 9s ease infinite;
   position: relative;
 }
 @keyframes gradientShift {
@@ -122,125 +125,298 @@ body {
 
 .profile {
   text-align: center;
-  padding: 0 20px 18px;
-  margin-top: -48px;
+  padding: 0 22px 20px;
+  margin-top: -50px;
 }
 .avatar-wrapper {
   position: relative;
   display: inline-block;
 }
 .avatar {
-  width: 88px;
-  height: 88px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
   border: 4px solid var(--bg);
   background: #1a1f30;
   display: block;
   transition: transform 0.3s ease;
 }
-.avatar:hover { transform: scale(1.06); }
-.status-ring {
+.avatar:hover { transform: scale(1.07); }
+
+/* status dot with pulse */
+.status-dot {
   position: absolute;
   bottom: 5px;
   right: 5px;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   border: 3px solid var(--bg);
   transition: background 0.4s ease;
 }
+.status-dot::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  opacity: 0;
+  animation: pulse-ring 2.4s ease-out infinite;
+}
+.status-online  { background: var(--green); }
+.status-idle    { background: var(--yellow); }
+.status-dnd     { background: var(--red); }
+.status-offline { background: var(--gray); }
+.status-online::after  { background: var(--green); }
+.status-idle::after    { background: var(--yellow); }
+.status-dnd::after     { background: var(--red); }
+
+@keyframes pulse-ring {
+  0%   { transform: scale(1);   opacity: 0.7; }
+  70%  { transform: scale(1.9); opacity: 0; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+
 .username {
-  font-size: 19px;
-  font-weight: 700;
+  font-size: 20px;
+  font-weight: 800;
   margin-top: 10px;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.4px;
 }
 .status-label {
   font-size: 12px;
   color: var(--text-muted);
   margin-top: 3px;
   text-transform: capitalize;
-  letter-spacing: 0.4px;
+  letter-spacing: 0.5px;
 }
 
-/* ── section divider ── */
+/* badges */
+.badges {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 20px;
+  border: 1px solid;
+}
+.badge-dev   { color: #818cf8; border-color: rgba(129,140,248,0.35); background: rgba(99,102,241,0.12); }
+.badge-owner { color: #c084fc; border-color: rgba(192,132,252,0.35); background: rgba(147,51,234,0.12); }
+
+/* ── section ── */
 .section {
   padding: 14px 18px;
   border-top: 1px solid var(--border);
 }
 .section-title {
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 10.5px;
+  font-weight: 700;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 8px;
+  letter-spacing: 1.1px;
+  margin-bottom: 10px;
 }
 
-/* ── activity ── */
-.activity-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  color: rgba(255,255,255,0.85);
-}
-.activity-row i { color: var(--accent); font-size: 14px; }
-
-/* ── spotify ── */
-.spotify-card {
+/* ── rich activity card ── */
+.activity-card {
   display: none;
-  gap: 12px;
-  align-items: center;
-  background: rgba(29,185,84,0.1);
-  border: 1px solid rgba(29,185,84,0.18);
+  gap: 10px;
+  background: rgba(99,102,241,0.07);
+  border: 1px solid rgba(99,102,241,0.15);
   padding: 12px;
   border-radius: 14px;
-  margin-top: 10px;
 }
-.spotify-card img {
-  width: 52px;
-  height: 52px;
-  border-radius: 10px;
+.activity-images {
+  position: relative;
   flex-shrink: 0;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+  width: 58px;
+  height: 58px;
 }
-.spotify-info { flex: 1; min-width: 0; font-size: 13px; }
-.spotify-song {
-  font-weight: 600;
+.activity-img-large {
+  width: 58px;
+  height: 58px;
+  border-radius: 12px;
+  object-fit: cover;
+  background: rgba(255,255,255,0.05);
+  display: block;
+}
+.activity-img-small {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2.5px solid var(--bg);
+  object-fit: cover;
+  display: none;
+}
+.activity-info { flex: 1; min-width: 0; font-size: 13px; }
+.activity-name {
+  font-weight: 700;
+  font-size: 13.5px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.spotify-artist {
-  color: var(--text-muted);
+.activity-detail {
+  color: rgba(255,255,255,0.7);
   margin-top: 2px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 12px;
 }
+.activity-state {
+  color: var(--text-muted);
+  margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px;
+}
+.activity-elapsed {
+  color: var(--text-muted);
+  margin-top: 3px;
+  font-size: 11px;
+}
+
+/* no activity fallback */
+.no-activity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.no-activity i { color: var(--accent); font-size: 14px; }
+
+/* ── spotify section ── */
+.spotify-section { display: none; }
+
+.spotify-card {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  background: rgba(29,185,84,0.08);
+  border: 1px solid rgba(29,185,84,0.2);
+  padding: 13px;
+  border-radius: 14px;
+}
+.spotify-art {
+  width: 64px;
+  height: 64px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  object-fit: cover;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.45);
+}
+.spotify-info { flex: 1; min-width: 0; font-size: 13px; }
 .spotify-label {
   display: flex;
   align-items: center;
   gap: 5px;
-  font-size: 11px;
-  font-weight: 600;
-  color: #1db954;
-  margin-bottom: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--spotify);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 5px;
+}
+.spotify-song {
+  font-weight: 700;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.spotify-song a {
+  color: inherit;
+  text-decoration: none;
+}
+.spotify-song a:hover { text-decoration: underline; }
+.spotify-artist {
+  color: var(--text-muted);
+  margin-top: 2px;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.spotify-times {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 6px;
 }
 .progress-track {
   height: 4px;
   background: rgba(255,255,255,0.1);
   border-radius: 4px;
-  margin-top: 7px;
+  margin-top: 3px;
   overflow: hidden;
 }
 .progress-fill {
   height: 100%;
   width: 0%;
-  background: #1db954;
+  background: var(--spotify);
   border-radius: 4px;
   transition: width 1s linear;
+}
+
+/* recently played */
+.recent-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 12px;
+  margin-bottom: 7px;
+}
+.recent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.recent-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 7px 10px;
+}
+.recent-art {
+  width: 34px;
+  height: 34px;
+  border-radius: 7px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.recent-info { min-width: 0; }
+.recent-song {
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.recent-artist {
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ── custom audio player ── */
@@ -249,12 +425,12 @@ body {
   border-top: 1px solid var(--border);
 }
 .player-title {
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 10.5px;
+  font-weight: 700;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 12px;
+  letter-spacing: 1.1px;
+  margin-bottom: 13px;
 }
 .player-controls {
   display: flex;
@@ -262,8 +438,8 @@ body {
   gap: 14px;
 }
 .play-btn {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--accent), var(--accent2));
   border: none;
@@ -275,13 +451,13 @@ body {
   font-size: 15px;
   flex-shrink: 0;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 4px 18px rgba(99,102,241,0.45);
+  box-shadow: 0 4px 20px rgba(99,102,241,0.45);
 }
 .play-btn:hover {
   transform: scale(1.1);
-  box-shadow: 0 6px 24px rgba(99,102,241,0.6);
+  box-shadow: 0 6px 26px rgba(99,102,241,0.65);
 }
-.play-btn:active { transform: scale(0.96); }
+.play-btn:active { transform: scale(0.95); }
 
 .player-seek {
   flex: 1;
@@ -317,7 +493,7 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-top: 12px;
+  margin-top: 13px;
 }
 .volume-row i {
   color: var(--text-muted);
@@ -363,7 +539,7 @@ body {
   align-items: flex-end;
   gap: 3px;
   height: 22px;
-  margin-top: 11px;
+  margin-top: 12px;
 }
 .vis-bar {
   flex: 1;
@@ -378,46 +554,48 @@ body {
   padding: 14px 18px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 10px;
+  gap: 12px;
 }
-.time-left { display: flex; align-items: center; gap: 10px; }
 .time-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: rgba(99,102,241,0.15);
-  border: 1px solid rgba(99,102,241,0.25);
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: rgba(99,102,241,0.14);
+  border: 1px solid rgba(99,102,241,0.22);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--accent);
-  font-size: 15px;
+  font-size: 16px;
   flex-shrink: 0;
 }
 .time-label {
-  font-size: 11px;
+  font-size: 10.5px;
   color: var(--text-muted);
-  font-weight: 500;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
 }
 .time-value {
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 21px;
+  font-weight: 800;
   letter-spacing: -0.5px;
   font-variant-numeric: tabular-nums;
+  line-height: 1.1;
 }
 .date-value {
   font-size: 12px;
   color: var(--text-muted);
-  margin-top: 1px;
+  margin-top: 2px;
 }
 
 /* ── mobile ── */
 @media (max-width: 480px) {
-  body { padding: 24px 12px 48px; }
-  .banner { height: 90px; }
-  .avatar { width: 78px; height: 78px; }
-  .time-value { font-size: 17px; }
+  body { padding: 24px 12px 56px; }
+  .banner { height: 95px; }
+  .avatar { width: 80px; height: 80px; }
+  .time-value { font-size: 18px; }
+  .spotify-art { width: 54px; height: 54px; }
 }
 </style>
 </head>
@@ -437,33 +615,58 @@ body {
     <div class="profile">
       <div class="avatar-wrapper">
         <img id="avatar" class="avatar" alt="avatar">
-        <div id="ring" class="status-ring"></div>
+        <div id="status-dot" class="status-dot status-offline"></div>
       </div>
       <div id="username" class="username">Loading…</div>
       <div id="status-label" class="status-label">—</div>
+      <div class="badges">
+        <span class="badge badge-owner">Owner</span>
+        <span class="badge badge-dev">Developer</span>
+      </div>
     </div>
 
-    <!-- activity -->
+    <!-- rich activity -->
     <div class="section">
       <div class="section-title">Activity</div>
-      <div id="activity" class="activity-row">
-        <i class="fa-solid fa-gamepad"></i>
-        <span id="activity-text">No activity</span>
+      <div id="activity-card" class="activity-card">
+        <div class="activity-images">
+          <img id="act-img-large" class="activity-img-large" alt="">
+          <img id="act-img-small" class="activity-img-small" alt="">
+        </div>
+        <div class="activity-info">
+          <div id="act-name" class="activity-name"></div>
+          <div id="act-detail" class="activity-detail"></div>
+          <div id="act-state" class="activity-state"></div>
+          <div id="act-elapsed" class="activity-elapsed"></div>
+        </div>
       </div>
+      <div id="no-activity" class="no-activity">
+        <i class="fa-solid fa-moon"></i>
+        <span>Not doing anything right now</span>
+      </div>
+    </div>
 
-      <!-- spotify -->
-      <div id="spotify" class="spotify-card">
-        <img id="cover" alt="album cover">
+    <!-- spotify -->
+    <div id="spotify-section" class="section spotify-section">
+      <div class="section-title"><i class="fa-brands fa-spotify" style="color:var(--spotify);margin-right:5px"></i>Listening on Spotify</div>
+      <div class="spotify-card">
+        <img id="spotify-art" class="spotify-art" alt="album art">
         <div class="spotify-info">
-          <div class="spotify-label">
-            <i class="fa-brands fa-spotify"></i> Spotify
+          <div id="spotify-song" class="spotify-song"></div>
+          <div id="spotify-artist" class="spotify-artist"></div>
+          <div class="spotify-times">
+            <span id="sp-cur">0:00</span>
+            <span id="sp-dur">0:00</span>
           </div>
-          <div id="song" class="spotify-song"></div>
-          <div id="artist" class="spotify-artist"></div>
           <div class="progress-track">
-            <div id="bar" class="progress-fill"></div>
+            <div id="sp-bar" class="progress-fill"></div>
           </div>
         </div>
+      </div>
+      <!-- recently played -->
+      <div id="recent-wrap" style="display:none">
+        <div class="recent-title">Recently Played</div>
+        <div id="recent-list" class="recent-list"></div>
       </div>
     </div>
   </div>
@@ -471,13 +674,11 @@ body {
   <!-- ── time widget ── -->
   <div class="card">
     <div class="time-card">
-      <div class="time-left">
-        <div class="time-icon"><i class="fa-regular fa-clock"></i></div>
-        <div>
-          <div class="time-label">Local Time</div>
-          <div id="clock" class="time-value">--:--:--</div>
-          <div id="date-display" class="date-value"></div>
-        </div>
+      <div class="time-icon"><i class="fa-regular fa-clock"></i></div>
+      <div>
+        <div class="time-label">Local Time</div>
+        <div id="clock" class="time-value">--:-- --</div>
+        <div id="date-display" class="date-value"></div>
       </div>
     </div>
   </div>
@@ -530,22 +731,139 @@ function fmtTime(s) {
   return m + ":" + String(sec).padStart(2, "0");
 }
 
-/* ── clock ── */
+function fmtElapsed(startMs) {
+  const sec = Math.floor((Date.now() - startMs) / 1000);
+  const h = Math.floor(sec / 3600);
+  const m = Math.floor((sec % 3600) / 60);
+  const s = sec % 60;
+  if (h > 0) return h + ":" + String(m).padStart(2,"0") + ":" + String(s).padStart(2,"0") + " elapsed";
+  return m + ":" + String(s).padStart(2,"0") + " elapsed";
+}
+
+function assetUrl(appId, assetId) {
+  if (!assetId) return null;
+  if (assetId.startsWith("mp:")) {
+    // media proxy image
+    return "https://media.discordapp.net/" + assetId.slice(3);
+  }
+  return "https://cdn.discordapp.com/app-assets/" + appId + "/" + assetId + ".png";
+}
+
+/* ── clock (12-hour) ── */
 const clockEl = document.getElementById("clock");
 const dateEl  = document.getElementById("date-display");
-const dayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const dayNames   = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
 function tickClock() {
   const now = new Date();
-  const h = String(now.getHours()).padStart(2, "0");
+  let h = now.getHours();
+  const ampm = h >= 12 ? "PM" : "AM";
+  h = h % 12 || 12;
   const m = String(now.getMinutes()).padStart(2, "0");
   const s = String(now.getSeconds()).padStart(2, "0");
-  clockEl.textContent = h + ":" + m + ":" + s;
+  clockEl.textContent = h + ":" + m + ":" + s + " " + ampm;
   dateEl.textContent = dayNames[now.getDay()] + ", " + monthNames[now.getMonth()] + " " + now.getDate();
 }
 tickClock();
 setInterval(tickClock, 1000);
+
+/* ── recently played session tracker ── */
+const MAX_RECENT_SONGS = 2;
+const RECENT_KEY = "zq_recent_songs";
+
+function loadRecent() {
+  try { return JSON.parse(localStorage.getItem(RECENT_KEY)) || []; } catch (e) { return []; }
+}
+function saveRecent(arr) {
+  try { localStorage.setItem(RECENT_KEY, JSON.stringify(arr)); } catch (e) {}
+}
+
+let recentSongs = loadRecent();
+let lastTrackId = null;
+let lastSpotifyTrack = null;
+
+function addToRecent(track) {
+  if (recentSongs.length > 0 && recentSongs[0].track_id === track.track_id) return;
+  recentSongs.unshift(track);
+  if (recentSongs.length > MAX_RECENT_SONGS) recentSongs.pop();
+  saveRecent(recentSongs);
+  renderRecent();
+}
+
+function escapeHtml(str) {
+  return String(str || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function renderRecent() {
+  const wrap = document.getElementById("recent-wrap");
+  const list = document.getElementById("recent-list");
+  if (recentSongs.length === 0) { wrap.style.display = "none"; return; }
+  wrap.style.display = "block";
+  list.innerHTML = recentSongs.map(t => `
+    <div class="recent-item">
+      <img class="recent-art" src="${escapeHtml(t.album_art_url)}" alt="">
+      <div class="recent-info">
+        <div class="recent-song">${escapeHtml(t.song)}</div>
+        <div class="recent-artist">${escapeHtml(t.artist)}</div>
+      </div>
+    </div>
+  `).join("");
+}
+
+renderRecent(); // render any persisted history on page load
+
+/* ── spotify live progress ── */
+let spRaf = null;
+let spTimestamps = null;
+
+function startSpotifyProgress() {
+  cancelAnimationFrame(spRaf);
+  function tick() {
+    if (!spTimestamps) return;
+    const { start, end } = spTimestamps;
+    const total = end - start;
+    const elapsed = Date.now() - start;
+    const pct = Math.max(0, Math.min(elapsed / total * 100, 100));
+    document.getElementById("sp-bar").style.width = pct + "%";
+    document.getElementById("sp-cur").textContent = fmtTime(elapsed / 1000);
+    document.getElementById("sp-dur").textContent = fmtTime(total / 1000);
+    spRaf = requestAnimationFrame(tick);
+  }
+  tick();
+}
+
+function stopSpotifyProgress() {
+  cancelAnimationFrame(spRaf);
+  spRaf = null;
+  spTimestamps = null;
+}
+
+/* ── activity elapsed timer ── */
+let actRaf = null;
+let actStartMs = null;
+
+function startElapsedTimer() {
+  cancelAnimationFrame(actRaf);
+  function tick() {
+    if (actStartMs === null) return;
+    document.getElementById("act-elapsed").textContent = fmtElapsed(actStartMs);
+    actRaf = requestAnimationFrame(tick);
+  }
+  tick();
+}
+
+function stopElapsedTimer() {
+  cancelAnimationFrame(actRaf);
+  actRaf = null;
+  actStartMs = null;
+  document.getElementById("act-elapsed").textContent = "";
+}
 
 /* ── lanyard / discord ── */
 function updateUI(data) {
@@ -558,42 +876,110 @@ function updateUI(data) {
   document.getElementById("status-label").textContent = status;
 
   document.getElementById("avatar").src = user.avatar
-    ? "https://cdn.discordapp.com/avatars/" + user.id + "/" + user.avatar + ".png?size=128"
+    ? "https://cdn.discordapp.com/avatars/" + user.id + "/" + user.avatar + ".png?size=256"
     : "https://cdn.discordapp.com/embed/avatars/0.png";
 
-  const statusColors = { online: "#22c55e", idle: "#facc15", dnd: "#ef4444", offline: "#6b7280" };
-  document.getElementById("ring").style.background = statusColors[status] || "#6b7280";
+  const dot = document.getElementById("status-dot");
+  dot.className = "status-dot status-" + status;
 
-  /* activity */
-  const actText = document.getElementById("activity-text");
-  const actIcon = document.querySelector("#activity i");
-  const activities = (data.activities || []).filter(a => a.type !== 2); // exclude Spotify (type 2)
+  /* ── rich activity ── */
+  const activities = (data.activities || []).filter(a => a.type !== 2);
+  const actCard    = document.getElementById("activity-card");
+  const noActivity = document.getElementById("no-activity");
+
+  stopElapsedTimer();
+
   if (activities.length > 0) {
-    actText.textContent = activities[0].name;
-    actIcon.className = "fa-solid fa-gamepad";
-  } else {
-    actText.textContent = "No activity";
-    actIcon.className = "fa-solid fa-moon";
-  }
+    const act = activities[0];
+    actCard.style.display = "flex";
+    noActivity.style.display = "none";
 
-  /* spotify */
-  const spotifyBox = document.getElementById("spotify");
-  if (data.spotify) {
-    const s = data.spotify;
-    spotifyBox.style.display = "flex";
-    document.getElementById("song").textContent   = s.song   || "";
-    document.getElementById("artist").textContent = s.artist || "";
-    document.getElementById("cover").src          = s.album_art_url || "";
-    if (s.timestamps) {
-      let pct = (Date.now() - s.timestamps.start) / (s.timestamps.end - s.timestamps.start) * 100;
-      document.getElementById("bar").style.width = Math.max(0, Math.min(pct, 100)) + "%";
+    document.getElementById("act-name").textContent   = act.name    || "";
+    document.getElementById("act-detail").textContent = act.details || "";
+    document.getElementById("act-state").textContent  = act.state   || "";
+
+    // large image
+    const largeImg = document.getElementById("act-img-large");
+    const largeKey = act.assets && act.assets.large_image;
+    if (largeKey) {
+      largeImg.src = assetUrl(act.application_id, largeKey);
+      largeImg.style.display = "block";
+      largeImg.title = (act.assets && act.assets.large_text) || "";
+    } else {
+      largeImg.style.display = "none";
+      largeImg.src = "";
+    }
+
+    // small image
+    const smallImg = document.getElementById("act-img-small");
+    const smallKey = act.assets && act.assets.small_image;
+    if (smallKey) {
+      smallImg.src = assetUrl(act.application_id, smallKey);
+      smallImg.style.display = "block";
+      smallImg.title = (act.assets && act.assets.small_text) || "";
+    } else {
+      smallImg.style.display = "none";
+      smallImg.src = "";
+    }
+
+    // elapsed timer
+    if (act.timestamps && act.timestamps.start) {
+      actStartMs = act.timestamps.start;
+      startElapsedTimer();
     }
   } else {
-    spotifyBox.style.display = "none";
-    document.getElementById("bar").style.width = "0%";
+    actCard.style.display = "none";
+    noActivity.style.display = "flex";
+  }
+
+  /* ── spotify ── */
+  const spSection = document.getElementById("spotify-section");
+  const sp = data.spotify;
+
+  if (sp) {
+    // detect track change → save previous to history
+    if (lastTrackId && lastTrackId !== sp.track_id) {
+      if (lastSpotifyTrack) addToRecent(lastSpotifyTrack);
+    }
+    lastTrackId = sp.track_id;
+    lastSpotifyTrack = { track_id: sp.track_id, song: sp.song, artist: sp.artist, album_art_url: sp.album_art_url };
+
+    spSection.style.display = "block";
+    document.getElementById("spotify-art").src = sp.album_art_url || "";
+
+    const songEl = document.getElementById("spotify-song");
+    if (sp.track_id) {
+      const a = document.createElement("a");
+      a.href = "https://open.spotify.com/track/" + encodeURIComponent(sp.track_id);
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.textContent = sp.song || "";
+      songEl.textContent = "";
+      songEl.appendChild(a);
+    } else {
+      songEl.textContent = sp.song || "";
+    }
+    document.getElementById("spotify-artist").textContent = sp.artist || "";
+
+    if (sp.timestamps) {
+      spTimestamps = sp.timestamps;
+      startSpotifyProgress();
+    } else {
+      stopSpotifyProgress();
+    }
+  } else {
+    // just stopped playing
+    if (lastTrackId && lastSpotifyTrack) {
+      addToRecent(lastSpotifyTrack);
+      lastSpotifyTrack = null;
+    }
+    lastTrackId = null;
+    spSection.style.display = "none";
+    stopSpotifyProgress();
   }
 }
 
+/* ── websocket ── */
 const socket = new WebSocket("wss://api.lanyard.rest/socket");
 socket.onopen = () => {
   socket.send(JSON.stringify({ op: 2, d: { subscribe_to_id: userId } }));
@@ -610,15 +996,15 @@ socket.onmessage = (event) => {
 };
 
 /* ── custom audio player ── */
-const audio      = document.getElementById("audio");
-const playBtn    = document.getElementById("play-btn");
-const playIcon   = document.getElementById("play-icon");
-const seekTrack  = document.getElementById("seek-track");
-const seekFill   = document.getElementById("seek-fill");
-const curTimeEl  = document.getElementById("cur-time");
-const durTimeEl  = document.getElementById("dur-time");
-const volSlider  = document.getElementById("volume-slider");
-const vizEl      = document.getElementById("visualizer");
+const audio     = document.getElementById("audio");
+const playBtn   = document.getElementById("play-btn");
+const playIcon  = document.getElementById("play-icon");
+const seekTrack = document.getElementById("seek-track");
+const seekFill  = document.getElementById("seek-fill");
+const curTimeEl = document.getElementById("cur-time");
+const durTimeEl = document.getElementById("dur-time");
+const volSlider = document.getElementById("volume-slider");
+const vizEl     = document.getElementById("visualizer");
 
 /* build visualizer bars */
 const BAR_COUNT = 20;
@@ -666,11 +1052,10 @@ seekTrack.addEventListener("click", (e) => {
 audio.volume = volSlider.value;
 volSlider.addEventListener("input", () => { audio.volume = volSlider.value; });
 
-/* visualizer animation – each bar has its own independent update cycle */
+/* visualizer animation */
 let vizRaf = null;
 const vizHeights = Array.from({ length: BAR_COUNT }, () => 3);
 const vizTargets = Array.from({ length: BAR_COUNT }, () => 3);
-// stagger each bar's refresh interval so they don't all jump at once
 const vizCounters = Array.from({ length: BAR_COUNT }, (_, i) => Math.floor(i * 3.2));
 const vizPeriods  = Array.from({ length: BAR_COUNT }, () => Math.floor(Math.random() * 6) + 6);
 
@@ -687,9 +1072,7 @@ function animViz() {
   vizRaf = requestAnimationFrame(animViz);
 }
 
-function startViz() {
-  animViz();
-}
+function startViz() { animViz(); }
 function stopViz() {
   cancelAnimationFrame(vizRaf);
   bars.forEach((b, i) => { vizHeights[i] = 3; b.style.height = "3px"; });
